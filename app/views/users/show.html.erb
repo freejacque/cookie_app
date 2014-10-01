@@ -1,3 +1,5 @@
+<p>Welcome <%= @user.name %>! <%= link_to("Click here to logout", session_path, method: 'delete') %></p>
+
 <p id="notice"><%= notice %></p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
