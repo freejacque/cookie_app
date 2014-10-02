@@ -1,23 +1,26 @@
-<h1>Listing users</h1>
+<%= render 'layouts/header' %>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each do |user| %>
+<div class="front-matter">
+  <h1>User List</h1>
+  <table>
+    <thead>
       <tr>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th colspan="6"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
-
-<%= link_to 'New User', new_user_path %>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td style="text-align: left;"><span><strong><%= user.name %></strong>&nbsp;</span></td>
+          <td style="text-align: left;"><span><%= user.email %></span></td>
+          <td style="text-align: left;"><span>(<%= user.role %>)</span></td>
+          <td><%= link_to 'Edit', edit_user_path(user) %></td>
+          <td><%= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <p><span><%= link_to('Back to Home', user_path(current_user)) %></span></p>
+  <p style="color: green;"><strong><%= flash[:notice] %></strong><p>
+</div>

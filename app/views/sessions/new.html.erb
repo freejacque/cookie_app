@@ -11,6 +11,7 @@
       <%= submit_tag('Login') %>
     <% end %>
     <p style="color: red"><%= flash[:error] %></p>
+    <p style="color: green;"><strong><%= flash[:notice] %></strong><p>
   </div>
-  <p><%= link_to('Sign up', new_user_path) %>
+  <p><%= link_to('Sign up', new_user_path) %></p>
 </div>

@@ -1,17 +1,44 @@
 <%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
+      <p><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</p>
       <ul>
       <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li style="color: red"><%= message %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="actions">
-    <%= f.submit %>
+    <p>
+      <%= f.label(:email) %>
+      <%= f.text_field(:email) %><br/>
+    </p>
+
+    <p>
+      <%= f.label(:name) %>
+      <%= f.text_field(:name) %><br/>
+    </p>
+
+    <p>
+      <%= f.label(:favorite_recipe) %><br/>
+      <% if @user.persisted? # if we are editing instead of creating... %>
+        <%= collection_select(:user, :favorite_recipe_id, Recipe.all, :id, :name, {:selected => @user.favorite_recipe.id}) %><br/>
+      <% else %>
+        <%= collection_select(:user, :favorite_recipe_id, Recipe.all, :id, :name) %><br/>
+      <% end %>
+    </p>
+
+    <% unless @user.persisted? # if we are creating instead of editing... %>
+    <p>
+      <%= f.label(:password) %><br/>
+      <%= f.password_field(:password) %><br/>
+      <%= f.label(:password_confirmation, 'Confirmation') %><br/>
+      <%= f.password_field(:password_confirmation) %><br/>
+    </p>
+    <% end %>
+
+    <p><%= f.submit %></p>
   </div>
 <% end %>

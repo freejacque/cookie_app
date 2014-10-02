@@ -9,13 +9,21 @@
 User.destroy_all
 Recipe.destroy_all
 
-User.create(name: "Phil", email: "philco@ga.co", role: "patissier", password: "beth")
-pj = User.create(name: "PJ", email: "pj@ga.co", role: "baker", password: "christie")
-User.create(name: "Travis", email: "trav@ga.co", role: "baker", password: "malsy")
-User.create(name: "Olivia", email: "olivia@ga.co", role: "customer", password: "phil")
+ph = User.create(name: "Phil",   email: "philco@ga.co", role: "patissiere", password: "beth")
+pj = User.create(name: "PJ",     email: "pj@ga.co",     role: "baker",      password: "christie")
+tr = User.create(name: "Travis", email: "trav@ga.co",   role: "baker",      password: "malsy")
+ol = User.create(name: "Olivia", email: "olivia@ga.co", role: "customer",   password: "phil")
 
-Recipe.create(name: "Chocolate Chip", cost: 12.50, total_cookies: 0)
-sd = Recipe.create(name: "Snicker Doodle", cost: 12.50, total_cookies: 0)
+cc = Recipe.create(name: "Chocolate Chip", cost: 12.50, total_cookies: 0)
+sd = Recipe.create(name: "Snicker Doodle", cost: 11.00, total_cookies: 0)
 
+ph.favorite_recipe = cc
 pj.favorite_recipe = sd
+tr.favorite_recipe = cc
+ol.favorite_recipe = sd
+
+ph.save
 pj.save
+tr.save
+ol.save
+

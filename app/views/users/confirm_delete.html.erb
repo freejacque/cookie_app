@@ -1,0 +1,11 @@
+<%= render 'layouts/header' %>
+
+<div class="front-matter">
+  <h1>Be Careful!</h1>
+
+  <%= button_to "Yes, remove my profile!", user_path(@user), method: :delete %>
+
+  <p>
+    <span><%= link_to('No, I made a mistake!', edit_user_path(@user)) %></span> &nbsp;
+  </p>
+</div>

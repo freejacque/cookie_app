@@ -1,6 +1,13 @@
-<h1>Editing user</h1>
+<%= render 'layouts/header' %>
 
-<%= render 'form' %>
+<div class="front-matter">
+  <h1>Update Your Profile</h1>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+  <%= render 'form' %>
+
+  <p>
+    <span><%= link_to('Update Password',  password_user_path(@user)) %></span> &nbsp;
+    <span><%= link_to('Back to Home',     user_path(current_user)) %></span> &nbsp;
+    <span><%= link_to('Delete this User', confirm_delete_user_path(@user)) %></span>
+  </p>
+</div>
