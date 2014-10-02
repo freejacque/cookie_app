@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 
   before_action :authenticate,          except: [:new, :create]
-  before_action :load_user,             only:   [:show, :edit, :update, :password, :update_password, :destroy, :confirm_delete]
+  before_action :load_user,             except: [:index, :new, :create]
   before_action :authorize_admin_only,  only:   :index
-  before_action :authorize_user_access, only:   [:show, :edit, :update, :password, :update_password, :destroy, :confirm_delete]
+  before_action :authorize_user_access, except: [:index, :new, :create]
 
   # GET /users
   def index
@@ -73,7 +73,6 @@ class UsersController < ApplicationController
   end
 
   def confirm_delete
-
   end
 
   private
