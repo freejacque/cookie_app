@@ -14,6 +14,18 @@
  *= require_self
  */
 
+header { min-width: 400px; }
+
+header div.home, div.profile {
+  display: inline-block;
+  margin: 10px 0;
+  width: 30%;
+}
+
+header div.home    { float: left;  margin-left:  40px; }
+header div.profile { float: right; margin-right: 40px; }
+header hr          { clear: both; }
+
 .front-matter {
   width: 600px;
   margin: 0 auto;
