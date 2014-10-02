@@ -4,6 +4,7 @@
   <% if @user.is_admin? %>
     <h1>Welcome Back, Patissier(e)</h1>
     <h2>What would you like to do?</h2>
+    <p><%= button_to "View / Manage Users", users_path, method: :get %></p>
     <p>(Insert commands for the patissiere...)</p>
   <% elsif @user.is_baker? %>
     <h1>Hey Baker!</h1>

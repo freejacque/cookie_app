@@ -7,7 +7,7 @@
 
   <p>
     <span><%= link_to('Update Password',  password_user_path(@user)) %></span> &nbsp;
-    <span><%= link_to('Back to Home',     user_path(@user)) %></span> &nbsp;
+    <span><%= link_to('Back to Home',     user_path(current_user)) %></span> &nbsp;
     <span><%= link_to('Delete this User', confirm_delete_user_path(@user)) %></span>
   </p>
 </div>

@@ -1,13 +1,15 @@
 class UsersController < ApplicationController
 
-  before_action :authenticate,          except: [:new, :create]
-  before_action :load_user,             except: [:index, :new, :create]
-  before_action :authorize_admin_only,  only:   :index
-  before_action :authorize_user_access, except: [:index, :new, :create]
+  before_action :authenticate,            except: [:new, :create]
+  before_action :load_user,               except: [:index, :new, :create]
+  before_action :authorize_admin_only,    only:   :index
+  before_action :authorize_user_only,     only:   :show
+  before_action :authorize_user_or_admin, except: [:index, :show, :new, :create]
 
   # GET /users
   def index
-    @users = User.all
+    # all of the users, in descending order, except the current user...
+    @users = User.all.sort.reverse.reject {|user| user == current_user}
   end
 
   # GET /users/1
@@ -66,10 +68,15 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   def destroy
-    @user.destroy
-    log_out!
-    flash[:notice] = "Thanks for the memories..."
-    redirect_to(root_path)
+    if current_user == @user
+      @user.destroy
+      log_out!
+      flash[:notice] = "Thanks for the memories..."
+      redirect_to(root_path)
+    else # admin is deleting...
+      @user.destroy
+      redirect_to(users_path)
+    end
   end
 
   def confirm_delete
@@ -106,7 +113,13 @@ class UsersController < ApplicationController
     end
   end
 
-  def authorize_user_access
+  def authorize_user_only
+    unless current_user == @user
+      redirect_to user_path(current_user)
+    end
+  end
+
+  def authorize_user_or_admin
     unless current_user == @user || current_user.is_admin?
       redirect_to user_path(current_user)
     end

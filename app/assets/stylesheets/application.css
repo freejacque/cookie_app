@@ -32,6 +32,8 @@ header hr          { clear: both; }
   text-align: center;
 }
 
+.front-matter table { margin: 0 auto; }
+
 .login {
   font-size: 0.8em;
   width: 250px;
