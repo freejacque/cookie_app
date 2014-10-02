@@ -12,6 +12,18 @@
   <% end %>
 
   <div class="actions">
+    <%= f.label(:email) %>
+    <%= f.text_field(:email) %><br/>
+    <%= f.label(:name) %>
+    <%= f.text_field(:name) %><br/>
+    <br/>
+    <%= f.label(:favorite_recipe) %><br/>
+    <%= collection_select(:user, :favorite_recipe_id, Recipe.all, :id, :name) %><br/>
+    <br/>
+    <%= f.label(:password) %><br/>
+    <%= f.password_field(:password) %><br/>
+    <%= f.label(:password_confirmation) %><br/>
+    <%= f.password_field(:password_confirmation) %><br/>
     <%= f.submit %>
   </div>
 <% end %>

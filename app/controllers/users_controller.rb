@@ -56,9 +56,10 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_params) # see the user_params method below...
 
     if @user.save
+      log_in(@user) # we log in with our new method in ApplicationController!
       redirect_to user_path(@user)
     else
       render :new
@@ -81,9 +82,21 @@ class UsersController < ApplicationController
   end
 
   private
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # this is an example of Rails 4's "strong params" pattern...
+    # you can read more about it here:
+    #   http://edgeguides.rubyonrails.org/action_controller_overview.html#strong-parameters
+    # it's too hard to go in to in this comment, but essentially we are going
+    #   to state explicitly below which of the form_for tags we will allow to be
+    #   assigned on creation for security purposes. explore the params hash
+    #   for more detail -- or ask me! (pj)
     def user_params
-      params[:user]
+      params.require(:user).permit(
+        :email,
+        :name,
+        :favorite_recipe_id,
+        :password,
+        :password_confirmation
+      ).merge(role: 'customer')
     end
 
     # puts the correct user into the @user instance variable whenever called, and
