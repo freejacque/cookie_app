@@ -23,15 +23,21 @@
 
     <p>
       <%= f.label(:favorite_recipe) %><br/>
-      <%= collection_select(:user, :favorite_recipe_id, Recipe.all, :id, :name) %><br/>
+      <% if @user.persisted? # if we are editing instead of creating... %>
+        <%= collection_select(:user, :favorite_recipe_id, Recipe.all, :id, :name, {:selected => @user.favorite_recipe.id}) %><br/>
+      <% else %>
+        <%= collection_select(:user, :favorite_recipe_id, Recipe.all, :id, :name) %><br/>
+      <% end %>
     </p>
 
+    <% unless @user.persisted? # if we are creating instead of editing... %>
     <p>
       <%= f.label(:password) %><br/>
       <%= f.password_field(:password) %><br/>
       <%= f.label(:password_confirmation, 'Confirmation') %><br/>
       <%= f.password_field(:password_confirmation) %><br/>
     </p>
+    <% end %>
 
     <p><%= f.submit %></p>
   </div>

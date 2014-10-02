@@ -40,3 +40,7 @@ header hr          { clear: both; }
   border-radius: 30px;
   padding: 5px 0;
 }
+
+ul {
+  list-style-type: none;
+}

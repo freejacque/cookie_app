@@ -56,7 +56,10 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    @user = User.new(user_params) # see the user_params method below...
+    # see the user_params method below...
+    # also: adding a default customer role on creation, removed that from params
+    #   since it would have forced everyone to be a customer when they updated!
+    @user = User.new({role: 'customer'}.merge(user_params))
 
     if @user.save
       log_in(@user) # we log in with our new method in ApplicationController!
@@ -96,7 +99,7 @@ class UsersController < ApplicationController
         :favorite_recipe_id,
         :password,
         :password_confirmation
-      ).merge(role: 'customer')
+      )
     end
 
     # puts the correct user into the @user instance variable whenever called, and
