@@ -34,7 +34,7 @@ The ERD looks like:
 - As a **first-time visitor to the site**, I can become a `User` of the app, so that I can use CookieCRUD™.
   - as someone looking to become a `User`, I should only be able to sign up with the role of 'customer'
 - As a **customer** user, I can **log in to the app** to order and eat some delicious cookies!
-- As a **petissiere** user, I can **log in to the app** to create new recipes for cookies, or to update the menu for our customers.
+- As a **patissiere** user, I can **log in to the app** to create new recipes for cookies, or to update the menu for our customers.
 - Any **user** can **edit their own info**
 - Any **user** can **remove their profile from the website**...
 - As a **baker** user, I can **log in to the app** so that I can bake cookies to sell.
