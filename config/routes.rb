@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     member do
       get   "password"
       patch "password", action: "update_password"
+      get   "confirm_delete"
     end
   end
   resources :recipes, except: [:edit, :update, :destroy]

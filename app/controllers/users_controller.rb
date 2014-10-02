@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 
   before_action :authenticate,          except: [:new, :create]
-  before_action :load_user,             only:   [:show, :edit, :update, :password, :update_password, :destroy]
+  before_action :load_user,             only:   [:show, :edit, :update, :password, :update_password, :destroy, :confirm_delete]
   before_action :authorize_admin_only,  only:   :index
-  before_action :authorize_user_access, only:   [:show, :edit, :update, :password, :update_password, :destroy]
+  before_action :authorize_user_access, only:   [:show, :edit, :update, :password, :update_password, :destroy, :confirm_delete]
 
   # GET /users
   def index
@@ -67,7 +67,13 @@ class UsersController < ApplicationController
   # DELETE /users/1
   def destroy
     @user.destroy
-    redirect_to(users_path)
+    log_out!
+    flash[:notice] = "Thanks for the memories..."
+    redirect_to(root_path)
+  end
+
+  def confirm_delete
+
   end
 
   private
