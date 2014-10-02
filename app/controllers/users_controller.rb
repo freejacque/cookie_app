@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :load_user, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate, :authorize
+
   # GET /users
   def index
     @users = User.all
@@ -6,22 +9,6 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    #make sure the user is authenticated
-    #make sure the authenticated user is this user
-    # who is the user being accessed?
-    if !load_user
-      redirect_to root_path
-    # who is trying to access this? are they a user?
-    # if they are a user, who is the user who is trying to access?
-    elsif !logged_in?
-      redirect_to login_path
-    # is the user trying to access this the same as the user being accessed?
-    elsif
-      current_user != @user && current_user.role != "patissiere"
-      redirect_to user_path(current_user)
-    else
-      render(:show)
-    end
   end
 
   # GET /users/new
@@ -56,7 +43,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   def destroy
     @user.destroy
-    redirect_to(user_path)
+    redirect_to(users_path)
   end
 
   private
@@ -67,5 +54,16 @@ class UsersController < ApplicationController
 
     def load_user
       @user = User.find(params[:id])
+      redirect_to root_path if !@user
+    end
+
+    def authenticate
+      redirect_to login_path if !logged_in?
+    end
+
+    def authorize
+      if current_user != @user && current_user.role != "patissier"
+      redirect_to user_path(current_user)
+      end
     end
 end
