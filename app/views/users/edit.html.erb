@@ -5,5 +5,8 @@
 
   <%= render 'form' %>
 
-  <p><%= link_to('Back to Home', user_path(@user)) %></p>
+  <p>
+    <span><%= link_to('Update Password',  password_user_path(@user)) %></span> &nbsp;
+    <span><%= link_to('Back to Home',     user_path(@user)) %></span> &nbsp;
+  </p>
 </div>

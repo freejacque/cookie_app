@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
 
   before_action :authenticate,          except: [:new, :create]
-  before_action :load_user,             only:   [:show, :edit, :update, :destroy]
+  before_action :load_user,             only:   [:show, :edit, :update, :password, :update_password, :destroy]
   before_action :authorize_admin_only,  only:   :index
-  before_action :authorize_user_access, only:   [:show, :edit, :update, :destroy]
+  before_action :authorize_user_access, only:   [:show, :edit, :update, :password, :update_password, :destroy]
 
   # GET /users
   def index
@@ -21,6 +21,10 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+  end
+
+  # GET /users/1/password
+  def password
   end
 
   # POST /users
@@ -44,6 +48,22 @@ class UsersController < ApplicationController
     end
   end
 
+  # PATCH/PUT /users/1/password
+  def update_password
+    if !@user.authenticate(user_password_params[:old_password])
+      @user.errors.add(:old_password, 'must match the current password')
+      render(:password)
+    elsif user_password_params[:password].blank?
+      @user.errors.add(:new_password, 'can\'t be blank!')
+      render(:password)
+    elsif @user.update(user_password_params.except(:old_password))
+      flash[:notice] = "Your password has been updated!"
+      redirect_to user_path(@user)
+    else
+      render(:password)
+    end
+  end
+
   # DELETE /users/1
   def destroy
     @user.destroy
@@ -57,6 +77,14 @@ class UsersController < ApplicationController
       :email,
       :name,
       :favorite_recipe_id,
+      :password,
+      :password_confirmation
+    )
+  end
+
+  def user_password_params
+    @user_password_params ||= params.require(:user).permit(
+      :old_password,
       :password,
       :password_confirmation
     )
